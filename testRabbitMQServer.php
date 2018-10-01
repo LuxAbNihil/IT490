@@ -15,6 +15,7 @@ function doLogin($username,$password)
 function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
+ 
   var_dump($request);
   if(!isset($request['type']))
   {
