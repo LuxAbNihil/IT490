@@ -1,4 +1,5 @@
-    
+<?php include './header.php'; ?> 
+   
     <form action="." method="post">
         <div class="form-group">
             <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="email" placeholder="Enter email">

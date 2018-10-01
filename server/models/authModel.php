@@ -1,6 +1,6 @@
 <?php
 function login($email, $password){
-     $db = Database::getDB();
+    $db = Database::getDB();
 	
 	try {
     echo "hello";
@@ -27,12 +27,10 @@ function login($email, $password){
     } 
                     
     else {
-        // header('Location: ');
-        
+        // header('Location: ');      
         echo ("Your email or password is not valid. Please, try again.");
                         
-        return false;
-                                        
+        return false;        
         }
     }       
     catch (Exception $e) {         

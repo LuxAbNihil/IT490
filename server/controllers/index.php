@@ -1,5 +1,5 @@
 <?php
-require('../models/database.php');
+require('../database.php');
 require('../models/authModel.php');
 session_start();
  //session_regenerate_id(TRUE); 
