@@ -5,7 +5,7 @@ function login($email, $password){
 	try {
     echo "hello";
                 
-	$sql = "SELECT * FROM accounts WHERE email='$email' and password='$password'";
+	$sql = "SELECT * FROM users WHERE username='$email' and password='$password'";
 	$statement = $db->prepare($sql);
 	$statement->execute();
 	$row = $statement->fetch();
@@ -15,7 +15,7 @@ function login($email, $password){
     if ($statement->rowCount() == 1) {
         //if (password_verify($pass, $hashed_pass)) {
         //echo"worked";                    
-        session_start();
+        //session_start();
 
         $_SESSION["email"] = $email;
         $_SESSION["id"]    = $row['id'];
