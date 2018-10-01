@@ -1,8 +1,7 @@
 <?php
-require('../model/server/database.php');
-
-require('../model/server/accountsTable.php');
- session_start();
+require('../models/database.php');
+require('../models/authModel.php');
+session_start();
  //session_regenerate_id(TRUE); 
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
