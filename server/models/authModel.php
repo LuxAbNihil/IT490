@@ -20,8 +20,8 @@ function login($email, $password){
         $_SESSION["email"] = $email;
         $_SESSION["id"]    = $row['id'];
         $_SESSION["start"] = time();
-        //echo "Welcome, " . $_SESSION['email'];
-        echo "Connected successfully";
+        
+        echo "User was found!";
                            
         return true;                   
     } 

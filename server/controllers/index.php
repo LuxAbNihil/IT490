@@ -12,7 +12,31 @@ if ($action == NULL) {
 }
 if ($action === 'index') {
         
-   include('./login.php');
+   include('../../client/views/login.php');
+}
+
+else if($action === 'login'){
+	
+	$email = filter_input(INPUT_POST, 'email');
+	$pass = filter_input(INPUT_POST, 'password');
+ 
+		if($email!='' && $pass!=''){
+		if(login($email, $pass)){				
+			   header("Location: .?action=dashboard");
+		   
+		}
+		else{
+			$error = "Wrong credentials";
+			include("../../client/views/login.php");
+		}
+		
+	}
+	 else{
+	 		echo "error";
+	 		$error = "Please Enter Both Email and Password";
+	 		include("../../client/views/login.php");
+	 }
+	
 }
 
 ?>

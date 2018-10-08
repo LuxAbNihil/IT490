@@ -1,4 +1,4 @@
-#!/usr/bin/php
+
 <?php
 
  $db = Database::getDB();
