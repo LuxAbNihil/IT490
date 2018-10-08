@@ -2,6 +2,7 @@
 require('../database.php');
 require('../models/authModel.php');
 session_start();
+
  //session_regenerate_id(TRUE); 
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
@@ -12,7 +13,7 @@ if ($action == NULL) {
 }
 if ($action === 'index') {
         
-   include('./login.php');
+   include('../../client/views/login.php');
 }
 
 ?>
