@@ -10,7 +10,7 @@ $response = "unsupported request type, politely FUCK OFF";
 switch ($request["type"])
 {
 	case "login":
-		$response = "login, yeah we can do that";
+		require_once("../testRabbitMQClient.php");
 	break;
 }
 echo json_encode($response);

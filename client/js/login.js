@@ -10,7 +10,7 @@ function SendLoginRequest(username,password)
 {
 	console.log("here")
 	var request = new XMLHttpRequest();
-	request.open("POST","192.168.1.132/yelpClone/IT490/login.php",true);
+	request.open("POST","login.php",true);
 	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 	request.onreadystatechange= function ()
 	{
