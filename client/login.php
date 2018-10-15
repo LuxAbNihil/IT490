@@ -7,9 +7,13 @@ if (!isset($_POST))
 }
 $request = $_POST;
 $response = "unsupported request type, politely FUCK OFF";
+
+echo "TYPE" . $request["type"];
 switch ($request["type"])
 {
 	case "login":
+		require_once("../testRabbitMQClient.php");
+	case "signup":
 		require_once("../testRabbitMQClient.php");
 	break;
 }

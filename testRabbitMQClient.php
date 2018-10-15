@@ -16,10 +16,31 @@ else
 
 
 $request = array();
-$request['type'] = "Login";
-$request['username'] = $_POST['uname'];
-$request['password'] = $_POST['pword'];
-$request['message'] = $msg;
+
+switch ($_POST['type']) {
+	case 'login':
+		$request['type'] = $_POST['type'];
+		$request['username'] = $_POST['uname'];
+		$request['password'] = $_POST['pword'];
+		$request['message'] = "LOGIN";
+		break;
+	
+	case 'signup':
+		$request['type'] = $_POST['type'];
+		$request['fname'] = $_POST['fname'];
+		$request['lname'] = $_POST['lname'];
+		$request['username'] = $_POST['uname'];
+		$request['password'] = $_POST['pword'];
+		$request['message'] = "SIGNUP";
+		break;
+	default: 
+		break;
+}
+
+// $request['type'] = $_POST['type'];
+// $request['username'] = $_POST['uname'];
+// $request['password'] = $_POST['pword'];
+// $request['message'] = $msg;
 $response = $client->send_request($request);
 //$response = $client->publish($request);
 
