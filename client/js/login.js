@@ -25,11 +25,12 @@ function SendLoginRequest(username,password)
 	request.send("type=login&uname="+username+"&pword="+password);
 }
 
-SendLoginRequest("hello", "there");
 var form = document.getElementById("login");
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
+
+    console.log(event)
 
     var email = document.getElementById("email").value;
     var pass = document.getElementById("pass").value;

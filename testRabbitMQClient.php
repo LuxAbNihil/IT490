@@ -14,15 +14,18 @@ else
   $msg = "test message";
 }
 
+
 $request = array();
 $request['type'] = "Login";
-$request['username'] = "steve";
-$request['password'] = "password";
+$request['username'] = $_POST['uname'];
+$request['password'] = $_POST['pword'];
 $request['message'] = $msg;
 $response = $client->send_request($request);
 //$response = $client->publish($request);
 
 echo "client received response: ".PHP_EOL;
+echo "USERNAME" . $_POST['uname'];
+echo "PASSWORD" . $_POST['pword'];
 print_r($response);
 echo "\n\n";
 
