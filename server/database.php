@@ -4,7 +4,7 @@
  $db = Database::getDB();
 
 class Database{
-    private static $dsn = 'mysql:host=192.168.1.118;port=3306;dbname=users';
+    private static $dsn = 'mysql:host=192.168.1.111;port=3306;dbname=user';
     private static $username = 'user';
     private static $password = '1111';
     private static $db;

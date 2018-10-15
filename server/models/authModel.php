@@ -5,7 +5,7 @@ function login($email, $password){
 	try {
     echo "hello";
                 
-	$sql = "SELECT * FROM users WHERE username='$email' and password='$password'";
+	$sql = "SELECT * FROM user WHERE username='$email' and password='$password'";
 	$statement = $db->prepare($sql);
 	$statement->execute();
 	$row = $statement->fetch();
