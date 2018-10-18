@@ -1,14 +1,42 @@
 window.addEventListener("load", function () {
-function HandleLoginResponse(response)
+
+sessionObject = sessionStorage.getItem("session");
+
+
+const sendSessionRequest = (sessionObject) => {
+
+	if(sessionObject == undefined){
+		return false;
+	}
+	else {
+	const url = "";
+	fetch(url, {
+		method: "POST",
+		data: {sessionId: object.id, sessionS: object.start, sessionLA: object.lastAccess},
+		headers: {
+			"Content-Type": "application/json"
+		}
+	}).then(
+		(response) => {console.log(response)}
+	)
+}
+}
+
+
+const HandleLoginResponse = (response) =>
 {
-	console.log(response)
+	
 	var text = JSON.parse(response);
+	console.log("TEXT", text)
+	console.log("ID",text.id)
+	console.log("START", text.start)
+
 //	document.getElementById("textResponse").innerHTML = response+"<p>";	
+	sessionStorage.setItem("session", text);
 	document.getElementById("textResponse").innerHTML = "response: "+text+"<p>";
 }
-function SendLoginRequest(username,password)
+const SendLoginRequest = (username,password) =>
 {
-	console.log("here")
 	var request = new XMLHttpRequest();
 	request.open("POST","login.php",true);
 	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
@@ -17,15 +45,16 @@ function SendLoginRequest(username,password)
 		console.log("1")
 		
 		if ((this.readyState == 4)&&(this.status == 200))
+
 		{
-			console.log("2")
+			console.log(this.responseText)
 			HandleLoginResponse(this.responseText);
 		}		
 	}
 	request.send("type=login&uname="+username+"&pword="+password);
 }
 
-function SendSignUpRequest(fname, lname, username, password)
+const SendSignUpRequest = (fname, lname, username, password) =>
 {
 	console.log("here")
 	var request = new XMLHttpRequest();
