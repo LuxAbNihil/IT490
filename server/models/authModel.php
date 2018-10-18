@@ -8,7 +8,7 @@ function register ($password, $email, $fname, $lname) {
             
             $birth =  $b->format('Y-m-d');
             
-            $sql = "SELECT email FROM accounts WHERE email = '$email'";
+            $sql = "SELECT email FROM user WHERE email = '$email'";
             
             $stmt = $db->prepare($sql);
             
@@ -24,7 +24,7 @@ function register ($password, $email, $fname, $lname) {
             }
                 
             else {                    
-                $sql = "INSERT INTO accounts (email, fname, lname,password) VALUES (:email, :fname, :lname,:password )";
+                $sql = "INSERT INTO user (email, fname, lname,password) VALUES (:email, :fname, :lname,:password )";
                 
                 // $birth = new DateTime();
                 $statement = $db->prepare($sql);
@@ -68,15 +68,29 @@ function login($email, $password){
     if ($statement->rowCount() == 1) {
         //if (password_verify($pass, $hashed_pass)) {
         //echo"worked";                    
-        //session_start();
+        session_start();
 
-        $_SESSION["email"] = $email;
-        $_SESSION["id"]    = $row['id'];
-        $_SESSION["start"] = time();
+        // $_SESSION["email"] = $email;
+        // $_SESSION["id"]    = $row['id'];
+        // $_SESSION["start"] = time();
+        $email = has($email);
+        $user_credentials = hash($row['id'], $email);
+
+
+        $session_object = array();
+        $session_object['id'] = $row['id'];
+        $session_object['start'] = time();
+        $session_object['lastAcess'] = time();
         
         echo "User was found!";
+
+        insertSession(
+            $session_object['id'], 
+            $session_object['start'], 
+            $session_object['lastAcess'] 
+        )
                            
-        return true;                   
+        return $session_object;                   
     } 
                     
     else {
@@ -90,5 +104,38 @@ function login($email, $password){
         echo "Error!";
         echo $e->getMessage();   
         }    
+}
+
+function insertSession($id, $start, $lastAcess){
+    try {
+    $sql = "INSERT INTO sessions (session_id, session_start, session_lastAccess) VALUES (:id, :start, :session_lastAccess)";
+
+    $statement = $db->prepare($sql);
+
+    $statement->bindValue(":id", $id);
+    $statement->bindValue(":start", $start);
+    $statement->bindValue(":lname", $lname);
+
+    $statement->execute();
+}
+    catch (Exception $e) {
+        echo 'Error!';
+        echo $e->getMessage();
+}
+
+}
+
+ function checkSession($id, $start, $lastAccess){
+
+
+    $sql = "SELECT * FROM sessions WHERE id=:id";
+
+    $statement = $db->prepare($sql);
+
+    $statement->bindValue(":email", $email);
+
+    $statement->execute();
+
+    $row = $statement->fetch();
 }
 ?>
