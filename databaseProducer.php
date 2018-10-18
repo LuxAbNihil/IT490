@@ -4,7 +4,7 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
-$client = new rabbitMQClient($ini_file,"testServer");
+$client = new rabbitMQClient("databaseLogging.ini","testServer");
 if (isset($argv[1]))
 {
   $msg = $argv[1];
@@ -41,14 +41,14 @@ switch ($_POST['type']) {
 // $request['username'] = $_POST['uname'];
 // $request['password'] = $_POST['pword'];
 // $request['message'] = $msg;
-$response = $client->send_request($request);
-//$response = $client->publish($request);
+//$response = $client->send_request($request);
+$response = $client->publish($request);
 
-//echo "client received response: ".PHP_EOL;
-//echo "USERNAME" . $_POST['uname'];
-//echo "PASSWORD" . $_POST['pword'];
+echo "client received response: ".PHP_EOL;
+echo "USERNAME" . $_POST['uname'];
+echo "PASSWORD" . $_POST['pword'];
 print_r($response);
-//eo "\n\n";
+echo "\n\n";
 
-//echo $argv[0]." END".PHP_EOL;
+echo $argv[0]." END".PHP_EOL;
 

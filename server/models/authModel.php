@@ -8,7 +8,7 @@ function register ($password, $email, $fname, $lname) {
             
             $birth =  $b->format('Y-m-d');
             
-            $sql = "SELECT email FROM accounts WHERE email = '$email'";
+            $sql = "SELECT username FROM user WHERE username = '$email'";
             
             $stmt = $db->prepare($sql);
             
@@ -24,7 +24,7 @@ function register ($password, $email, $fname, $lname) {
             }
                 
             else {                    
-                $sql = "INSERT INTO accounts (email, fname, lname,password) VALUES (:email, :fname, :lname,:password )";
+                $sql = "INSERT INTO user (username, password, first_name, last_name) VALUES (:email, :password, :fname, :lname)";
                 
                 // $birth = new DateTime();
                 $statement = $db->prepare($sql);
@@ -56,7 +56,7 @@ function login($email, $password){
     $db = Database::getDB();
 	
 	try {
-    echo "hello";
+    
                 
 	$sql = "SELECT * FROM user WHERE username='$email' and password='$password'";
 	$statement = $db->prepare($sql);
@@ -75,8 +75,12 @@ function login($email, $password){
         $_SESSION["start"] = time();
         
         echo "User was found!";
-                           
-        return true;                   
+
+	$return_session = array();
+	$return_session["id"] = $_SESSION["id"];
+	$return_session["start"] = $_SESSION["start"];
+
+        return $return_session;
     } 
                     
     else {
