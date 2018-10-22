@@ -1,4 +1,5 @@
 <?php
+require('errorPublish.php');
 
 function register ($password, $email, $fname, $lname) {
         $db = Database::getDB();
@@ -8,11 +9,11 @@ function register ($password, $email, $fname, $lname) {
             
             $birth =  $b->format('Y-m-d');
             
-<<<<<<< HEAD
+
             $sql = "SELECT username FROM user WHERE username = '$email'";
-=======
-            $sql = "SELECT email FROM user WHERE email = '$email'";
->>>>>>> 39880e81084d65a47e376abefbcbd7a8b3e90738
+
+
+
             
             $stmt = $db->prepare($sql);
             
@@ -23,7 +24,8 @@ function register ($password, $email, $fname, $lname) {
             if ($stmt->rowCount() > 0) {
                 
                 
-                echo 'That email already exists!';
+		    $message = 'That email already exists!';
+		    publishToLog($message);
                                
             }
                 
@@ -54,8 +56,9 @@ function register ($password, $email, $fname, $lname) {
        // }
             
             catch (Exception $e) {
-                echo 'Error!';
-                echo $e->getMessage();
+	        echo 'Error!';
+                publishToLog($e);
+		echo $e->getMessage();
             }
             
             
@@ -76,13 +79,13 @@ function login($email, $password){
     if ($statement->rowCount() == 1) {
         //if (password_verify($pass, $hashed_pass)) {
         //echo"worked";                    
-        session_start();
+        
 
         // $_SESSION["email"] = $email;
         // $_SESSION["id"]    = $row['id'];
         // $_SESSION["start"] = time();
-        $email = has($email);
-        $user_credentials = hash($row['id'], $email);
+        //$email = has($email);
+        //$user_credentials = hash($row['id'], $email);
 
 
         $session_object = array();
@@ -93,64 +96,101 @@ function login($email, $password){
         echo "User was found!";
 
 
-	$return_session = array();
-	$return_session["id"] = $_SESSION["id"];
-	$return_session["start"] = $_SESSION["start"];
+	//$return_session = array();
+	//$return_session["id"] = $_SESSION["id"];
+	//$return_session["start"] = $_SESSION["start"];
 
-        return $return_session;
+       // return $return_session;
 
-        insertSession(
-            $session_object['id'], 
-            $session_object['start'], 
-            $session_object['lastAcess'] 
-        )
-                           
-        return $session_object;                   
-    } 
+
+        $session_variable = insertSession(
+           $session_object['id'], 
+           $session_object['start'], 
+	   $session_object['lastAcess'] ,
+	$db
+   ); 
+      print_r($session_variable);                           
+	return $session_variable;
+	echo"bad"; 	} 
                     
     else {
         // header('Location: ');      
         echo ("Your email or password is not valid. Please, try again.");
-                        
-        return false;        
+	$message = "Invalid Login Attempt";
+        publishToLog($message);	
+	return $message;	
         }
     }       
     catch (Exception $e) {         
-        echo "Error!";
-        echo $e->getMessage();   
-        }    
-}
+	 echo "Error!";
+         publishToLog($e);
+         echo $e->getMessage();   
+         return $e;    
+    }}
 
-function insertSession($id, $start, $lastAcess){
-    try {
-    $sql = "INSERT INTO sessions (session_id, session_start, session_lastAccess) VALUES (:id, :start, :session_lastAccess)";
+function insertSession($id, $start, $lastAccess, $db){
+	try {
+
+        $hashed_ID = hash("sha256", $id);
+
+
+    $sql = "INSERT INTO sessions (session_id, time_created, last_time_accessed) VALUES (:id, :start, :lastAccess)";
 
     $statement = $db->prepare($sql);
 
-    $statement->bindValue(":id", $id);
+    $statement->bindValue(":id", $hashed_ID);
     $statement->bindValue(":start", $start);
-    $statement->bindValue(":lname", $lname);
+    $statement->bindValue(":lastAccess", $lastAccess);
+
+    $session_array = array();
+    $session_array['session_id'] = $id;
+    $session_array['start'] = $start;
+    $session_array['lastAccess'] = $lastAccess;
+    // echo hash("sha256", json_encode($session_array));
 
     $statement->execute();
+
+    return $session_array;
 }
     catch (Exception $e) {
-        echo 'Error!';
+	    echo 'Error!';
+	publishToLog($e);
         echo $e->getMessage();
 }
 
 }
 
- function checkSession($id, $start, $lastAccess){
+ function checkSession($object){
 
+    echo "HERE";
+    var_dump(json_decode($object));
+    $newOBJ = json_decode($object);
+    // print_r($newOBJ);
+    $val = (array)$newOBJ;
+    print_r($val);
+    try{
 
-    $sql = "SELECT * FROM sessions WHERE id=:id";
+    $db = Database::getDB();
 
+    $sql = "SELECT * FROM sessions WHERE session_id=:id";
+    echo $sql;
     $statement = $db->prepare($sql);
 
-    $statement->bindValue(":email", $email);
+    $statement->bindValue(":id", $val["id"]);
 
     $statement->execute();
 
     $row = $statement->fetch();
+    print_r($row);
+    if($row){
+        return true;
+    }
+
+    return false;
+}  catch (Exception $e) {
+	echo 'Error!';
+	publishToLog($e);
+        echo $e->getMessage();
+}
 }
 ?>

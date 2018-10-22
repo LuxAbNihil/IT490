@@ -5,27 +5,29 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require('server/models/authModel.php');
 require('server/database.php');
-include('databaseLogging.ini');
 
-$client = new rabbitMQclient('databaseLogging.ini','testServer');
 
 function requestProcessor($request)
 {
-  echo "received request".PHP_EOL;
-  var_dump($request);
-//  echo "This is the request ".$request;
+ // echo "received request".PHP_EOL;
+  //var_dump($request);
+  echo "This is the request ";
+  // print_r($request);
   if(!isset($request['type']))
   {
-	  return "ERROR: unsupported message type";
-
+    	  $message = "ERROR: unsupported message type";
+	  publishToLog($message);
+	  return $message;
 
   }
   switch ($request['type'])
   {
     case "login":
-      return login($request['username'], $request['password']);
-    case "validate_session":
-	    return doValidate($request['sessionId']);
+           return login($request['username'], $request['password']);
+    case "session_valid":
+    $obj = $request['session_object'];
+      echo $obj;
+      	    return checkSession($obj);
     case "signup":
 	    return register($request['password'],$request['username'],$request['fname'],$request['lname']);
   }
