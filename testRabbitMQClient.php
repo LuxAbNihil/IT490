@@ -1,4 +1,4 @@
-#!/usr/bin/php
+
 <?php
 require_once('path.inc');
 require_once('get_host_info.inc');
@@ -15,16 +15,44 @@ else
 }
 
 $request = array();
-$request['type'] = "Login";
-$request['username'] = "steve";
-$request['password'] = "password";
-$request['message'] = $msg;
+
+switch ($_POST['type']) {
+	case 'login':
+		$request['type'] = $_POST['type'];
+		$request['username'] = $_POST['uname'];
+		$request['password'] = $_POST['pword'];
+		$request['message'] = "LOGIN";
+		break;
+	
+	case 'signup':
+		$request['type'] = $_POST['type'];
+		$request['fname'] = $_POST['fname'];
+		$request['lname'] = $_POST['lname'];
+		$request['username'] = $_POST['uname'];
+		$request['password'] = $_POST['pword'];
+		$request['message'] = "SIGNUP";
+		break;
+	case "session_valid":
+		$request['type'] = $_POST['type'];
+		$request['session_object'] = $_POST['session_object'];
+		$request['message'] = "SESSION";
+		break;
+	default: 
+		break;
+}
+
+// $request['type'] = $_POST['type'];
+// $request['username'] = $_POST['uname'];
+// $request['password'] = $_POST['pword'];
+// $request['message'] = $msg;
+
 $response = $client->send_request($request);
-//$response = $client->publish($request);
 
-echo "client received response: ".PHP_EOL;
-print_r($response);
-echo "\n\n";
+// echo "client received response: ".PHP_EOL;
 
-echo $argv[0]." END".PHP_EOL;
+// print_r($response);
+echo json_encode($response);
+
+
+// echo $argv[0]." END".PHP_EOL;
 
