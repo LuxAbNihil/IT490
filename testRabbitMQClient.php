@@ -37,6 +37,11 @@ switch ($_POST['type']) {
 		$request['session_object'] = $_POST['session_object'];
 		$request['message'] = "SESSION";
 		break;
+	case 'search':
+		$request['type'] = $_POST['type'];
+		$request['term'] = $_POST['term'];
+		$request['location'] = $_POST['location'];
+		break;
 	default: 
 		break;
 }

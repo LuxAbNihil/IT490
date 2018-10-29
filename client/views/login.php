@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
        
-     <script src="http://code.gijgo.com/1.6.1/js/gijgo.js" type="text/javascript"></script>
-    <link href="http://code.gijgo.com/1.6.1/css/gijgo.css" rel="stylesheet" type="text/css" />
-     <script type="text/javascript" src="../js/authentication.js"></script>
+<!--      <script src="http://code.gijgo.com/1.6.1/js/gijgo.js" type="text/javascript"></script>
+    <link href="http://code.gijgo.com/1.6.1/css/gijgo.css" rel="stylesheet" type="text/css" /> -->
+     <script type="text/javascript" src="../js/login.js" type="module"></script>
 </head>
 <div>
      <div style="margin-top: 100px">LOGIN </div>

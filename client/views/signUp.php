@@ -11,7 +11,7 @@
      <script src="http://code.gijgo.com/1.6.1/js/gijgo.js" type="text/javascript"></script>
     <link href="http://code.gijgo.com/1.6.1/css/gijgo.css" rel="stylesheet" type="text/css" /> -->
 
-     <script type="text/javascript" src="../js/authentication.js"></script>
+     <script type="text/javascript" src="../js/login.js"></script>
 </head>
 <body>
 <div>

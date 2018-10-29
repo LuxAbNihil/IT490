@@ -11,14 +11,19 @@
      <script src="http://code.gijgo.com/1.6.1/js/gijgo.js" type="text/javascript"></script>
     <link href="http://code.gijgo.com/1.6.1/css/gijgo.css" rel="stylesheet" type="text/css" />
 
-     <script type="text/javascript" src="../js/authentication.js"></script>
+     <script type="text/javascript" src="../js/dashboard.js"></script>
 </head>
 <body>
 <div class="jumbotron">
-        <div class="container">
-          <h1 class="display-3">Hello, there!</h1>
-          <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-          <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+		<form id="search" class="form-group" action="./dashboard.php" method="post">
+  		<input id="search-bar" type="text" class="form-control">
+  		<input type="hidden" name="action" value="search">
+		</div>
+      		<input type="submit" value="Search" class="btn btn-primary">
+    	</div>
+    </form>
+    	<div id="search-results" class="results-wrapper" style="display: flex; justify-content: center;">
+            
         </div>
       </div>
   	</body>

@@ -17,6 +17,8 @@ switch ($request["type"])
 		require_once("../testRabbitMQClient.php");
 	case "session_valid":
 		require_once("../testRabbitMQClient.php");
+	case "search":
+		require_once("../testRabbitMQClient.php");	
 	break;
 }
 // echo json_encode($request);
