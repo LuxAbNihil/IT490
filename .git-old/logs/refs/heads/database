@@ -1,0 +1,3 @@
+0000000000000000000000000000000000000000 c5df08086a7436476be9af85050ac385a1cf004c lukaszvikas <lzvikas1@gmail.com> 1538420403 -0400	branch: Created from HEAD
+c5df08086a7436476be9af85050ac385a1cf004c de2414995ef8205ee2592c6ea82b58e8e6aaaf43 lukaszvikas <lzvikas1@gmail.com> 1538421155 -0400	commit: added server config
+de2414995ef8205ee2592c6ea82b58e8e6aaaf43 cc79d21d2723d39dcc2710211044fd78678ff323 lukaszvikas <lzvikas1@gmail.com> 1538427664 -0400	commit: mysql connection successful

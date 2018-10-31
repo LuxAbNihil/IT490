@@ -33,6 +33,19 @@ switch ($_POST['type']) {
 		$request['password'] = $_POST['pword'];
 		$request['message'] = "SIGNUP";
 		break;
+<<<<<<< HEAD
+=======
+	case "session_valid":
+		$request['type'] = $_POST['type'];
+		$request['session_object'] = $_POST['session_object'];
+		$request['message'] = "SESSION";
+		break;
+	case 'search':
+		$request['type'] = $_POST['type'];
+		$request['term'] = $_POST['term'];
+		$request['location'] = $_POST['location'];
+		break;
+>>>>>>> 6ace9fa044d1ec566c2d8c8d17d13ad440a4c275
 	default: 
 		break;
 }
@@ -41,9 +54,13 @@ switch ($_POST['type']) {
 // $request['username'] = $_POST['uname'];
 // $request['password'] = $_POST['pword'];
 // $request['message'] = $msg;
-$response = $client->send_request($request);
-//$response = $client->publish($request);
+<<<<<<< HEAD
+=======
 
+>>>>>>> 6ace9fa044d1ec566c2d8c8d17d13ad440a4c275
+$response = $client->send_request($request);
+
+<<<<<<< HEAD
 
 //echo "client received response: ".PHP_EOL;
 //echo "USERNAME" . $_POST['uname'];
@@ -61,4 +78,13 @@ echo json_encode($response);
 
 // echo $argv[0]." END".PHP_EOL;
 
+=======
+// echo "client received response: ".PHP_EOL;
+
+// print_r($response);
+echo json_encode($response);
+
+
+// echo $argv[0]." END".PHP_EOL;
+>>>>>>> 6ace9fa044d1ec566c2d8c8d17d13ad440a4c275
 
