@@ -1,7 +1,5 @@
 <?php
 
-require_once('errorPublish.php');
-
 function register ($password, $email, $fname, $lname) {
         $db = Database::getDB();
                
@@ -10,10 +8,8 @@ function register ($password, $email, $fname, $lname) {
             
             $birth =  $b->format('Y-m-d');
             
-
-
             $sql = "SELECT username FROM user WHERE username = '$email'";
-          
+
             $stmt = $db->prepare($sql);
             
             $stmt->bindValue(':email', $email);
@@ -21,26 +17,11 @@ function register ($password, $email, $fname, $lname) {
             $stmt->execute();    
             
             if ($stmt->rowCount() > 0) {
-                
-                
-
-		    $message = 'That email already exists!';
-		    publishToLog($message);
-                               
+                echo 'That email already exists!';                 
             }
                 
-           else {                    
-
-                $sql = "INSERT INTO user (username, password, first_name, last_name) VALUES (:email, :password, :fname, :lname)";
-
-
-
-
-                echo 'That email already exists!';
-                               
-            }
-                
-            
+            else {                    
+                $sql = "INSERT INTO user (email, fname, lname,password) VALUES (:email, :fname, :lname,:password )";                                      
                 
                 // $birth = new DateTime();
                 $statement = $db->prepare($sql);
@@ -58,8 +39,7 @@ function register ($password, $email, $fname, $lname) {
                 //else{
                    // echo"Please enter all of the details";
                 //}      
-       // }
-            
+       }
         catch (Exception $e) {
 
 	    echo 'Error!';
@@ -67,18 +47,11 @@ function register ($password, $email, $fname, $lname) {
 		echo $e->getMessage();
 
         }
-            
-            
-        }
+}
 function login($email, $password){
     $db = Database::getDB();
 	
 	try {
-
-    
-
-    echo "hello";
-
                 
 	$sql = "SELECT * FROM user WHERE username='$email' and password='$password'";
 	$statement = $db->prepare($sql);
@@ -89,7 +62,14 @@ function login($email, $password){
         //$hashed_pass = $row['password'];        
     if ($statement->rowCount() == 1) {
         //if (password_verify($pass, $hashed_pass)) {
-        //echo"worked";                    
+        //echo"worked";           
+
+        // $_SESSION["email"] = $email;
+        // $_SESSION["id"]    = $row['id'];
+        // $_SESSION["start"] = time();
+        // $email = has($email);
+        //$user_credentials = hash($row['id'], $email);
+
 
         // session_start();
 
@@ -119,28 +99,42 @@ function login($email, $password){
         // $email = hash($email);
         // $user_credentials = hash($row['id'], $email);
         
-        echo "User was found!";
-
-
 
 	//$return_session = array();
 	//$return_session["id"] = $_SESSION["id"];
 	//$return_session["start"] = $_SESSION["start"];
 
-       // return $return_session;
-      print_r($session_variable);                           
+       // return $return_session;                     
+
 	return $sessionCheck;
                     
    }                 
     else {
         // header('Location: ');      
         echo ("Your email or password is not valid. Please, try again.");
+                        
+        return false;        
+        }
+    }       
+    catch (Exception $e) {         
+        echo "Error!";
+        echo $e->getMessage();   
+        }    
+}
 
-	$message = "Invalid Login Attempt";
-        //publishToLog($message);	
-	return $message;	
-    }}
-       
+function insertSession($id, $start, $lastAcess){
+    try {
+    $sql = "INSERT INTO sessions (session_id, session_start, session_lastAccess) VALUES (:id, :start, :session_lastAccess)";
+
+    $statement = $db->prepare($sql);
+
+    $statement->bindValue(":id", $id);
+    $statement->bindValue(":start", $start);
+    $statement->bindValue(":lname", $lname);
+
+    
+    $statement->execute();
+}
     catch (Exception $e) {         
 	 echo "Error!";
          publishToLog($e);
@@ -176,16 +170,15 @@ function insertSession($id, $start, $lastAccess, $db){
 }
     catch (Exception $e) {
 	    echo 'Error!';
-	publishToLog($e);
-                        
-        return false;        
+	    publishToLog($e);  
+        echo $e->getMessage();      
         }
-    }       
-
-
+}      
+        
 
 
  function checkSession($object){
+
 
 
     // echo "HERE";
@@ -196,6 +189,14 @@ function insertSession($id, $start, $lastAccess, $db){
     // print_r($val);
     // print_r($object);
     // echo $object["id"];
+    $statement->bindValue(":email", $email);
+    echo "HERE";
+    var_dump(json_decode($object));
+    $newOBJ = json_decode($object);
+    // print_r($newOBJ);
+    $val = (array)$newOBJ;
+    print_r($val);
+
     try{
 
     $db = Database::getDB();
@@ -210,6 +211,7 @@ function insertSession($id, $start, $lastAccess, $db){
 
     $row = $statement->fetch(PDO::FETCH_ASSOC);
     echo "ROW";
+
     print_r($row);
     if($row){
         echo "In chekSession if($row)";
@@ -223,6 +225,5 @@ function insertSession($id, $start, $lastAccess, $db){
 	publishToLog($e);
         echo $e->getMessage();
 }
-
 }
 ?>
