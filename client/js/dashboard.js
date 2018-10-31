@@ -8,41 +8,60 @@ window.addEventListener("load", () => {
 	// const inputVal = dashDropdown.addEventListener("input", (event) => {
 	// 	return event.target.value;
 	// })
-		const renderSearchResults = (arr) => {
+
+	window.showMore = (id) => {
+		console.log(id)
+		window.location.assign(`http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/restaurant.php?resid=${id}`);
+	}
+
+// const searchResult = document.getElementById("search-results");
+
+// 		searchResult.innerHTML =
+// 		 ` 
+// 		   	 <button onclick="showMore(12345)">Show More</button>
+		   
+// 		   `
+				
+	const renderSearchResults = (arr) => {
 			console.log(arr);
 
 		const searchResult = document.getElementById("search-results");
 
 		searchResult.innerHTML = 
 		arr.map(item => {
+
+
 			console.log(item.image_url)
 			return (
 				`
-				<div class="card" style="width: 18rem; margin: 5rem">
+				<div class="card" style="width: 18rem; margin: 5rem" onlick="showMore()">
 					<div class="results-item-img">
 						<img src='${item.image_url}' class="card-img-top" style="width: 50; height: 80;" />
 					</div>
 					<div class="card-body">
 						<h5 class="card-title">${item.name}</h5>
-						<div class="card-text">Rating: ${item.rating}</div>
-						<div class="card-texte">Price: ${item.price}</div>
+						<div class="card-item">Rating: ${item.rating}</div>
+						<div class="card-item">Price: ${item.price}</div>
+						<button onclick="showMore('${item.id}')">Show More</button>
 					</div>
 				</div>
 				`
 				)
 			})
+
 		}
+
+	
+		
+
+
 
 	const handleSearchResponse = (response) => {
 		console.log(response)
-
 		let text = JSON.parse(response);
-		console.log(text)
 		let parsedText = JSON.parse(text);
-
-
-		console.log(parsedText[0]);
-		renderSearchResults(parsedText[0]);
+		parsedText.splice(3);
+		renderSearchResults(parsedText);
 		// document.getElementById("search-results").innerHTML = "response: "+text.toString()+"<p>";
 	}
 
