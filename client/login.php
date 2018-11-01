@@ -6,6 +6,8 @@ if (!isset($_POST))
 	exit(0);
 }
 $request = $_POST;
+// print_r($request);
+
 $response = "unsupported request type, politely FUCK OFF";
 //echo "TYPE" . $request["type"];
 switch ($request["type"])
@@ -21,6 +23,12 @@ switch ($request["type"])
 	case "favorites":
 		require_once("../testRabbitMQClient.php");	
 	case "favorites_check":
+		require_once("../testRabbitMQClient.php");
+	case "initial_search":
+		require_once("../testRabbitMQClient.php");
+	case "add_comment":
+		require_once("../testRabbitMQClient.php");
+	case "initial_comment":
 		require_once("../testRabbitMQClient.php");
 	break;
 }

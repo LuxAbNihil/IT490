@@ -41,6 +41,7 @@ switch ($_POST['type']) {
 		$request['type'] = $_POST['type'];
 		$request['term'] = $_POST['term'];
 		$request['location'] = $_POST['location'];
+		$request['id'] = $_POST['id'];
 		break;
 	case 'favorites':
 		$request['type'] = $_POST['type'];
@@ -52,7 +53,18 @@ switch ($_POST['type']) {
 		$request['id'] = $_POST['id'];
 		$request['resid'] = $_POST['resid'];
 		break;
-	default: 
+	case "initial_search":
+		$request['type'] = $_POST['type'];
+		$request['id'] = $_POST['id'];
+	case "add_comment": 
+		$request['type'] = $_POST['type'];
+		$request['id'] = $_POST['id'];
+		$request['resid'] = $_POST['resid'];
+		$request['comment'] = $_POST['comment'];
+	case "initial_comment":
+		$request['type'] = $_POST['type'];
+		$request['resid'] = $_POST['resid'];
+  	default: 
 		break;
 }
 

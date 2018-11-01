@@ -5,10 +5,48 @@ window.addEventListener("load", () => {
 	const dashDropdown = document.getElementById("search-bar");
 	const searchForm= document.getElementById("search");
 
+	const logout = document.getElementById("logout");
+
+	const sessionObj = sessionStorage.getItem("session");
+
+	if(sessionStorage.getItem("session")){
+
+		const parsedObj = JSON.parse(sessionObj);
+		const userId = parsedObj.id;
+		console.log(userId, "ID")
+
+	}
+
+	
+
 	window.showMore = (id) => {
 		console.log(id)
 		window.location.assign(`http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/restaurant.php?resid=${id}`);
-	}	  
+	}	 
+
+
+	const checkSession = () => {
+
+	if(sessionStorage.getItem("session") != null){
+
+		if(window.location.href != "http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/dashboard.php")
+			
+			window.location.assign("http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/dashboard.php");
+		else{
+			return null;
+		}
+	}
+	else {
+		if(window.location.href != "http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/login.php")
+			
+			window.location.assign("http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/login.php");
+		else{
+			return null;
+		}
+	}
+}
+
+checkSession(); 
 				
 	const renderSearchResults = (arr) => {
 			console.log(arr);
@@ -40,8 +78,8 @@ window.addEventListener("load", () => {
 		console.log(response)
 		let text = JSON.parse(response);
 		let parsedText = JSON.parse(text);
-		
-		console.log(text)
+
+		//console.log(text)
 		console.log(parsedText);
 		renderSearchResults(parsedText);
 		// document.getElementById("search-results").innerHTML = "response: "+text.toString()+"<p>";
@@ -61,15 +99,15 @@ window.addEventListener("load", () => {
 				handleSearchResponse(this.responseText);
 			}		
 		}
-		console.log("he");
-		console.log(location);
-		request.send("type=search&term=restaurants&location="+location);
+
+		console.log(userId)
+		request.send(`type=search&term=restaurants&location=${location}&id=${userId}`);
 }
 
-	const sendInitialSearchRequest = () => {
+	const sendSuggestionsRequest = (id) => {
 		console.log("here")
 		const request = new XMLHttpRequest();
-		request.open("GET","../login.php",true);
+		request.open("POST","../login.php",true);
 		request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		request.onreadystatechange= function ()
 		{		
@@ -79,16 +117,11 @@ window.addEventListener("load", () => {
 			}		
 		}
 		console.log("he");
-		console.log(location);
-		request.send("type=initial_search&term=restaurants&location=nyc");
+
+		request.send(`type=initial_search&id=${id}`);
 }
 
-// searchForm.addEventListener("onload", (event) => {
-
-
-// 		sendSearchRequest()
-// 	})
-
+sendSuggestionsRequest(userId)
 
 searchForm.addEventListener("submit", (event) => {
 
@@ -101,5 +134,9 @@ searchForm.addEventListener("submit", (event) => {
 		sendSearchRequest(inputVal)
 	})
 
+logout.addEventListener("click", () => {
+	sessionStorage.removeItem("session");
+	location.reload()
+})
 	// const inputVal = dashDropdown.onchange = (e) => {console.log(e.target.value)}
 })

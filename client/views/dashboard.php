@@ -14,6 +14,9 @@
      <script type="text/javascript" src="../js/dashboard.js"></script>
 </head>
 <body>
+	<nav id="logout" class="navbar navbar-light bg-light" style="display: flex; justify-content: end;">
+    <button class="btn btn-outline-danger" id="logout" type="button">Log out</button>
+</nav>
 <div class="jumbotron">
 		<form id="search" class="form-group" action="./dashboard.php" method="post">
   		<input id="search-bar" type="text" class="form-control">
