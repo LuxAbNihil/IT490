@@ -4,28 +4,26 @@ function register ($password, $email, $fname, $lname) {
         $db = Database::getDB();
                
         try {
-            $b = new DateTime($birthday);
             
-            $birth =  $b->format('Y-m-d');
             
-            $sql = "SELECT username FROM user WHERE username = '$email'";
+            $sql = "SELECT username FROM user WHERE username = :username";
 
             $stmt = $db->prepare($sql);
             
-            $stmt->bindValue(':email', $email);
+            $stmt->bindValue(':username', $email);
             
             $stmt->execute();    
             
             if ($stmt->rowCount() > 0) {
-                echo 'That email already exists!';                 
+                return 'That email already exists!';                 
             }
                 
             else {                    
-                $sql = "INSERT INTO user (email, fname, lname,password) VALUES (:email, :fname, :lname,:password )";                                      
+                $sql = "INSERT INTO user (username, password, first_name, last_name) VALUES (:username, :password, :fname, :lname)";                                      
                 
                 // $birth = new DateTime();
                 $statement = $db->prepare($sql);
-                $statement->bindValue(":email", $email);
+                $statement->bindValue(":username", $email);
                 $statement->bindValue(":fname", $fname);
                 $statement->bindValue(":lname", $lname);
                 // $statement->bindValue(":phone", $phone);
@@ -34,7 +32,8 @@ function register ($password, $email, $fname, $lname) {
                 $statement->bindValue(":password", $password);   
                 
                 $statement->execute();
-                echo '<div style=""text-align:center">Your Account Was Created Successfuly</div>';     
+                return "Success: you can log in now";
+
             }
                 //else{
                    // echo"Please enter all of the details";
@@ -43,7 +42,7 @@ function register ($password, $email, $fname, $lname) {
         catch (Exception $e) {
 
 	    echo 'Error!';
-                publishToLog($e);
+                publishToLog($e->getMessage());
 		echo $e->getMessage();
 
         }
@@ -117,7 +116,8 @@ function login($email, $password){
     }       
     catch (Exception $e) {         
         echo "Error!";
-        echo $e->getMessage();   
+        echo $e->getMessage(); 
+        publishToLog($e->getMessage());  
         }    
 }
 
@@ -149,7 +149,7 @@ function insertSession($id, $start, $lastAccess, $db){
 }
     catch (Exception $e) {
 	    echo 'Error!';
-	    publishToLog($e);  
+	    publishToLog($e->getMessage());  
         echo $e->getMessage();      
         }
 }      
@@ -200,7 +200,7 @@ function insertSession($id, $start, $lastAccess, $db){
     return false;
 }  catch (Exception $e) {
 	echo 'Error!';
-	publishToLog($e);
+	publishToLog($e->getMessage());
         echo $e->getMessage();
 }
 }
