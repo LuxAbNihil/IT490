@@ -78,7 +78,6 @@ function login($email, $password){
         echo "This is row from Login \n";
         print_r($row);
         $sessionCheck = checkSession($row);
-        echo $sessionCheck;
         echo "This is session check \n";
         if($sessionCheck == false) {
             echo "This is bad";
@@ -121,26 +120,6 @@ function login($email, $password){
         echo $e->getMessage();   
         }    
 }
-
-function insertSession($id, $start, $lastAcess){
-    try {
-    $sql = "INSERT INTO sessions (session_id, session_start, session_lastAccess) VALUES (:id, :start, :session_lastAccess)";
-
-    $statement = $db->prepare($sql);
-
-    $statement->bindValue(":id", $id);
-    $statement->bindValue(":start", $start);
-    $statement->bindValue(":lname", $lname);
-
-    
-    $statement->execute();
-}
-    catch (Exception $e) {         
-	 echo "Error!";
-         publishToLog($e);
-         echo $e->getMessage();   
-         return $e;    
-    }}
 
 function insertSession($id, $start, $lastAccess, $db){
 	try {
@@ -189,7 +168,6 @@ function insertSession($id, $start, $lastAccess, $db){
     // print_r($val);
     // print_r($object);
     // echo $object["id"];
-    $statement->bindValue(":email", $email);
     echo "HERE";
     var_dump(json_decode($object));
     $newOBJ = json_decode($object);
@@ -214,7 +192,7 @@ function insertSession($id, $start, $lastAccess, $db){
 
     print_r($row);
     if($row){
-        echo "In chekSession if($row)";
+        echo "In chekSession";
         print_r($row);
         return $row;
     }
