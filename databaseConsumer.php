@@ -12,17 +12,18 @@ require('api/yelp.php');
 function objectMapper($term, $location, $obj){
   echo $term;
   echo $location;
-  $decodedObj = json_decode($obj);
-  // print_r($decodedObj);
+    $decodedObj = json_decode($obj);
+    // print_r($decodedObj);
+    $makeArray = (array)$decodedObj;
+    $sliced = array_slice($makeArray, 0, 2);
   $search_arr = array();
-   // echo "Decoded: \n\n";
-   // print_r($decodedObj);
-   // echo "\n\n";
-  foreach($decodedObj as $item)
+  echo "SLICED";
+   print_r($sliced);
+  foreach($sliced as $item)
   {
     echo "ITEM";
     foreach($item as $i){
-      // print_r($i);
+      //print_r($i);
      //print_r($item);
     $stringified = json_encode($i);
     array_push($search_arr, $i);
@@ -30,8 +31,9 @@ function objectMapper($term, $location, $obj){
     }
     
   }
-  //print_r($search_arr);
-  return json_encode($search_arr);
+  //print_r($search_arr)
+  $searchSlice = array_slice($search_arr, 0, 3);
+  return json_encode($searchSlice);
 }
 
 function requestProcessor($request)
@@ -61,20 +63,24 @@ function requestProcessor($request)
     case "search":
         echo "Search";
          $result = checkSearch($request['term'],$request['location']);
+         //echo "RESULT".$result;
          if($result === false){
+
             $req = search($request['term'],$request['location']);
             echo "REQ";
             // print_r($req);
             $return_var = objectMapper($request['term'],$request['location'],$req);
-            // print_r($return_var);
             return $return_var;
          } 
+      // print_r($result);
+         echo "HELLO I HERE \n\n";
          return $result;
     case "favorites":
+        print_r($request);
         $checkFavs = retrieveFavs($request['id'],$request['resid']);
         if(!$checkFavs)
           return addToFavs($request['id'],$request['resid']);
-        return $checkFavs;
+        return removeFav($request['id'],$request['resid']);
         //return search($request['term'],$request['location']);
         // return $result;
       case "favorites_check":
