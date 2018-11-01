@@ -14,7 +14,6 @@ switch ($request["type"])
 		require_once("../testRabbitMQClient.php");
 	case "signup":
 		require_once("../testRabbitMQClient.php");
-
 	case "session_valid":
 		require_once("../testRabbitMQClient.php");
 	case "search":

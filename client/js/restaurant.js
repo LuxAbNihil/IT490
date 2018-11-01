@@ -30,25 +30,24 @@ window.addEventListener("load", () => {
 	const sessionObj = sessionStorage.getItem("session");
 		const parsedObj = JSON.parse(sessionObj);
 		const userId = parsedObj.id;
-		console.log(userId);
-
 
 		const params = (new URL(document.location)).searchParams;
-		const resId = params.get("resid");
-		console.log(resId);
+
 
 	const handleRestaurantResponse = (response) => {
 		
-
 		let text = JSON.parse(response);
 		console.log(text)
-
 
 		if(text.scalar == "Already Favorited") {
 			console.log("here")
 			favoritesBtn.innerHTML = "Favorited";
 			favoritesBtn.style.backgroundColor = "green";
 		} 
+		else if(text.scalar == "Fav Removed Successfully"){
+			favoritesBtn.innerHTML = "Favorite";
+				favoritesBtn.style.backgroundColor = "rgb(0, 123, 255)";
+		}
 		else {	
 			let parsedText = JSON.parse(text);
 			if(parsedText) {
@@ -56,7 +55,6 @@ window.addEventListener("load", () => {
 				favoritesBtn.style.backgroundColor = "green";
 			}
 		}
-		// renderComment(parsedText);
 	}
 
 	const sendFavoriteRequestCheck = (id, resid) => {
