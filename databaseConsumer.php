@@ -6,10 +6,13 @@ require_once('rabbitMQLib.inc');
 require('server/models/authModel.php');
 require('server/models/searchModel.php');
 require('server/models/favoritesModel.php');
+require('server/models/forumModel.php');
 require('server/database.php');
 require('api/yelp.php');
+require("errorPublish.php");
 
-function objectMapper($term, $location, $obj){
+
+function objectMapper($id, $term, $location, $obj){
   echo $term;
   echo $location;
     $decodedObj = json_decode($obj);
@@ -27,7 +30,7 @@ function objectMapper($term, $location, $obj){
      //print_r($item);
     $stringified = json_encode($i);
     array_push($search_arr, $i);
-    insertSearch($term, $location, $stringified);
+    insertSearch($id, $term, $location, $stringified);
     }
     
   }
@@ -41,10 +44,9 @@ function requestProcessor($request)
  // echo "received request".PHP_EOL;
   //var_dump($request);
   echo "This is the request ";
-  // print_r($request);
+   print_r($request);
   if(!isset($request['type']))
   {
-      echo $request;
     	  $message = "ERROR: unsupported message type";
 	  publishToLog($message);
 	  return $message;
@@ -61,20 +63,28 @@ function requestProcessor($request)
     case "signup":
 	    return register($request['password'],$request['username'],$request['fname'],$request['lname']);
     case "search":
+      var_dump($request['term']);
         echo "Search";
-         $result = checkSearch($request['term'],$request['location']);
+         $result = checkSearch($request['id'],$request['term'],$request['location']);
          //echo "RESULT".$result;
          if($result === false){
 
             $req = search($request['term'],$request['location']);
             echo "REQ";
             // print_r($req);
-            $return_var = objectMapper($request['term'],$request['location'],$req);
+            $return_var = objectMapper($request['id'],$request['term'],$request['location'],$req);
             return $return_var;
          } 
       // print_r($result);
          echo "HELLO I HERE \n\n";
          return $result;
+    case "initial_search":
+    {
+        return initialSearch($request['id']);
+        // echo "Initial_Search \n\n";
+        // print_r($initialSearch);
+        // return $initialSearch;
+    }
     case "favorites":
         print_r($request);
         $checkFavs = retrieveFavs($request['id'],$request['resid']);
@@ -85,6 +95,14 @@ function requestProcessor($request)
         // return $result;
       case "favorites_check":
          return retrieveFavs($request['id'],$request['resid']);
+      case "add_comment":
+          print_r($request);
+          $result = insertComment($request['id'], $request['resid'], $request['comment']);
+          return $result;
+      case "initial_comment":
+           print_r($request);
+           $result = checkComments($request['resid']);
+           return $result;
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
