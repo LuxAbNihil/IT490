@@ -1,6 +1,6 @@
 <?php
 
- function checkSearch ($id, $term, $location){
+function checkSearch ($id, $term, $location){
  	$db = Database::getDB();
  	echo $id."ID\n\n";
  	echo $term;
@@ -11,37 +11,22 @@
        $statement->bindValue(':term',$term);
        $statement->bindValue(':location',$location);
        $isTrue = $statement->execute();
-       if($isTrue){
-       	  echo "Success \n";
-       } else 
-       {
-       	 echo "Failure1 \n";
-       }
+
        $rows = $statement->fetchAll();
-       echo "ROWS";
-print_r($rows);
-       // echo "\n";
-        echo $statement->rowCount();
-        echo "This is row count";
+       
        if($statement->rowCount() === 0)
        {
-       		echo "0 count";
        		return false;
+       }
        } 
-       // foreach($rows as $row){
-       // 	 echo "ROWS \n\n";
-       //    echo $rows['data'];
-       //}
-       // print_r($rows);
+
        $resArray = array();
        foreach($rows as $row){
-       	echo "SOMETHING \n\n";
-       	// print_r($row);
-       	$encoded = json_decode($row['data']);
-       	array_push($resArray, $encoded);
+       $encoded = json_decode($row['data']);
+       array_push($resArray, $encoded);
        }
-       insertLastSearch($id, $location);
-       return json_encode($resArray);
+       
+       return $resArray;
  	} catch(Exception $e) {
         echo "ERROR";
         echo $e->getMessage();
@@ -51,12 +36,7 @@ print_r($rows);
 
  function insertSearch($id, $term, $location, $data){
  	$db = Database::getDB();
- 	//echo $location;
- 	echo "DATA \n\n";
- 	echo "-------\n";
- 	echo $term.$location."\n\n";
- 	//print_r($data);
- 	echo "-------\n";
+
     try{
        $sql = "INSERT INTO search (term, location, data) VALUES (:term, :location, :data)";
        $statement = $db->prepare($sql);
@@ -66,7 +46,6 @@ print_r($rows);
        $isTrue = $statement->execute();
        if($isTrue){
        	insertLastSearch($id, $location);
-       	echo "Success \n";
        } else 
        {
        	 echo "Failure1 \n";
@@ -82,27 +61,21 @@ function initialSearch ($id){
 	$db = Database::getDB();
 
  	try{
-       $sql = "SELECT last_search FROM user WHERE id= :id";
-       $statement = $db->prepare($sql);
-       $statement->bindValue(':id',$id);
-       $statement->execute();
 
-       $rows = $statement->fetchAll();
-       print_r($rows);
+       $sql = "SELECT last_search FROM user WHERE id = :id";
+       $statement = $db->prepare($sql);
+       //$statement->bindValue(':location',$location);
+       $statement->bindValue(':id',$id);
+       $isTrue = $statement->execute();
+
+       $rows = $statement->fetch();
+
+       $lSearch = $rows['last_search'];
        
-       if(!$rows){
-       		$check = checkSearch($id, 'restaurants', 'nyc');
-       		if(!$check){
-       			echo "FIRST";
-       			echo $check."ECHO";
-       			return search('restaurants', 'nyc');
-       		} 
-       		echo "SECOND";
-       		return $check;
-       } 
-       echo "THIRD";
-       echo $rows[0]['last_search'];
-       return checkSearch($id,'restaurants', $rows[0]['last_search']);    		
+       if($rows !== 0){
+         return lastSearchMapper($lSearch, $id);
+       }	
+       return "No initial search";
 	}
 		catch(Exception $e) {
         echo "ERROR";
@@ -111,27 +84,67 @@ function initialSearch ($id){
        }
 function insertLastSearch($id, $location){
 	$db = Database::getDB();
- 	//echo $location;
+ 	echo $location;
  	echo "-------\n";
     try{
-       $sql = "UPDATE user SET last_search = CONCAT(last_search, ',',:location) WHERE id = :id";
-       $statement = $db->prepare($sql);
-       $statement->bindValue(':location',$location);
-       $statement->bindValue(':id',$id);
-       $isTrue = $statement->execute();
-       if($isTrue){
-       	echo "Success \n";
-       } else 
-       {
-       	echo $id;
-       	echo $location;
-       	 echo "Failure2 \n";
-       }
+       $searchCheck = checkLastSearch($id, $location);
+       if($searchCheck){
+         $sql = "UPDATE user SET last_search = CONCAT(last_search, ',', :location) WHERE id = :id";
+         $statement = $db->prepare($sql);
+         $statement->bindValue(':location',$location);
+         $statement->bindValue(':id',$id);
+         $isTrue = $statement->execute();
+      } 
+       return NULL;
  	} catch(Exception $e) {
         echo "ERROR";
         echo $e->getMessage();
  	}
  }
+ function lastSearchMapper($str, $id){
+    $sliced = explode(",", $str);
+    $requestArray = array();
 
+    foreach($sliced as $key => $value){
+      if(in_array($location, $searchArray)){
+         return;
+       } 
+      $searched = checkSearch($id, 'restaurants', $value);
+      array_push($requestArray, $searched);
+    }
+    print_r($requestArray);
+    return $requestArray;
+ }
 
-?>
+function checkLastSearch($id, $location){
+	$db = Database::getDB();
+	try{
+       $sql = "SELECT last_search FROM user WHERE id = :id";
+       $statement = $db->prepare($sql);
+       //$statement->bindValue(':location',$location);
+       $statement->bindValue(':id',$id);
+       $isTrue = $statement->execute();
+
+       $rows = $statement->fetchAll();
+
+       $lSearch = $rows[0]['last_search'];
+       //lastSearchMapper($lSearch, $id);
+       return checkForDups($lSearch, $location);
+
+ 	} catch(Exception $e) {
+        echo "ERROR";
+        echo $e->getMessage();
+ 	}
+}
+
+function checkForDups($str, $location){
+       $searches = $str;
+       $searchArray = explode(',', $str);
+       if(in_array($location, $searchArray)){
+        echo "FALSE";
+         return false;
+       }  
+       echo "TRUE";
+       return true;
+}
+?> 
