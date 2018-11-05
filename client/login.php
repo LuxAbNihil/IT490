@@ -30,6 +30,8 @@ switch ($request["type"])
 		require_once("../testRabbitMQClient.php");
 	case "initial_comment":
 		require_once("../testRabbitMQClient.php");
+	case "favorite_list":
+		require_once("../testRabbitMQClient.php");
 	break;
 }
 // echo json_encode($request);

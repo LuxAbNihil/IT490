@@ -8,8 +8,6 @@ window.addEventListener("load", () => {
 
 	const logout = document.getElementById("logout");
 
-	const commentForm = document.getElementById("forum");
-
 
 	const checkSession = () => {
 
@@ -31,27 +29,6 @@ window.addEventListener("load", () => {
 		}
 	}
 }
-
-checkSession();
-	const renderComment = (arr) => {
-			console.log(arr[0]);
-
-		const commentList = document.getElementById("comment-list");
-
-		commentList.innerHTML += 
-				`
-				<li class="comment card clearfix" style="list-style: none; margin-top: 2rem; padding: 2rem;">
-                    <div class="clearfix">
-                        <h4 class="pull-left">${arr[0]['restaurant_id']}</h4>
-                        <p class="pull-right">${arr[0]['time_posted']}</p>
-                    </div>
-                    <p>
-                        <em>${arr[0]['comment']}</em>
-                    </p>
-                 </li>
-                  `
-			
-		}
 
 	const sessionObj = sessionStorage.getItem("session");
 		const parsedObj = JSON.parse(sessionObj);
@@ -127,55 +104,6 @@ checkSession();
 }
 
 
-const handleCommentResponse = (response) => {
-		console.log(response)
-		let text = JSON.parse(response);
-	    console.log(text)
-	    renderComment(text);
-}
-
-const sendInitialCommentRequest = (id) => {
-	const request = new XMLHttpRequest();
-	request.open("POST","../login.php",true);
-	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	request.onreadystatechange= function ()
-	{
-		console.log("1")
-		
-		if ((this.readyState == 4)&&(this.status == 200))
-		{
-			console.log("2")
-			handleCommentResponse(this.responseText);
-		}		
-	}
-
-	console.log(id)
-	request.send(`type=initial_comment&resid=${id}`);
-}
-
-sendInitialCommentRequest(resId);
-
-const sendCommentRequest = (id, resid, comment) => {
-	const request = new XMLHttpRequest();
-	request.open("POST","../login.php",true);
-	request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	request.onreadystatechange= function ()
-	{
-		console.log("1")
-		
-		if ((this.readyState == 4)&&(this.status == 200))
-		{
-			console.log("2")
-			handleCommentResponse(this.responseText);
-		}		
-	}
-
-	console.log(id, resid)
-	request.send(`type=add_comment&id=${id}&resid=${resid}&comment=${comment}`);
-}
-
-
-
 
 sendFavoriteRequestCheck(userId, resId);
 
@@ -188,20 +116,5 @@ logout.addEventListener("click", () => {
 	sessionStorage.removeItem("session");
 	location.reload();
 })
-
-
-commentForm.addEventListener("submit", function (event) {
-    			event.preventDefault();
-
-    			console.log(event)
-
-    			const email = document.getElementById("name").value;
-			    const message = document.getElementById("message").value;
-
-		
-			    if((email && message) !== null)
-			    	sendCommentRequest(userId ,resId, message);
-			    location.reload()
-			  });
 
 })

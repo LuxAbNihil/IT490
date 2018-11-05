@@ -56,14 +56,11 @@ switch ($_POST['type']) {
 	case "initial_search":
 		$request['type'] = $_POST['type'];
 		$request['id'] = $_POST['id'];
-	case "add_comment": 
+		break;
+	case "favorite_list":
 		$request['type'] = $_POST['type'];
 		$request['id'] = $_POST['id'];
-		$request['resid'] = $_POST['resid'];
-		$request['comment'] = $_POST['comment'];
-	case "initial_comment":
-		$request['type'] = $_POST['type'];
-		$request['resid'] = $_POST['resid'];
+		break;
   	default: 
 		break;
 }

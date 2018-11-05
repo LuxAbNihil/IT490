@@ -2,22 +2,17 @@
 <html>
 
 <head>
-    <title>Welcome to To-Do </title>
-
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-    <script src="http://code.gijgo.com/1.6.1/js/gijgo.js" type="text/javascript"></script>
-    <link href="http://code.gijgo.com/1.6.1/css/gijgo.css" rel="stylesheet" type="text/css" />
+
     <script type="text/javascript" src="../js/restaurant.js"></script>
 </head>
 
 <body>
-        <nav class="navbar navbar-light bg-light" style="display: flex; justify-content: end;">
-    <button class="btn btn-outline-danger" id="logout" type="button">Log out</button>
-</nav>
+    <?php include("./header.php"); ?>
     <div class="jumbotron" style="padding: 1rem 1rem; background-color: #fff; margin: 0;">
         <div id="restaurant" class="results-wrapper" style="display: flex; justify-content: center; flex-direction: column">
             <div class="img-wrapper" style="width: 100%; height: 25rem;">
@@ -35,9 +30,9 @@
                 <form id="forum" role="form">
                     <br style="clear:both">
                     <h2 style="margin-bottom: 25px; text-align: center;">Leave a comment for this restaurant</h3>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                           <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                         <textarea class="form-control" type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>                    
                         </div>

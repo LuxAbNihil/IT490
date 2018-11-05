@@ -42,5 +42,7 @@
     </div>
 
     <div id="text-response"></div>
+
+    <a href="http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/login.php" class="badge badge-light" style="font-size: 1.2rem; background-color: #fff; margin: 2rem; ">Login</a>
 	</body>
 </html>

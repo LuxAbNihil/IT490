@@ -26,7 +26,8 @@
             <input type="submit" value="Login" name="loggedIn" class="btn btn-primary">
         </form>
         <div id="textResponse">
-            Response: 
+            
         </div>
+         <a href="http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/signUp.php" class="badge badge-light" style="font-size: 1.2rem; background-color: #fff; margin: 2rem; ">Sign Up</a>
     </div>
     </html>
