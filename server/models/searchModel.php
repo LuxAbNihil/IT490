@@ -18,31 +18,31 @@ function checkSearch ($id, $term, $location){
        {
        		return false;
        }
-       } 
-
+       
        $resArray = array();
        foreach($rows as $row){
        $encoded = json_decode($row['data']);
        array_push($resArray, $encoded);
        }
        
-       return $resArray;
- 	} catch(Exception $e) {
+       return $resArray;}
+  catch(Exception $e) {
         echo "ERROR";
         echo $e->getMessage();
 
  	}
  }
 
- function insertSearch($id, $term, $location, $data){
+ function insertSearch($id, $term, $location, $data, $resid){
  	$db = Database::getDB();
 
     try{
-       $sql = "INSERT INTO search (term, location, data) VALUES (:term, :location, :data)";
+       $sql = "INSERT INTO search (term, location, data, restaurant_id) VALUES (:term, :location, :data, :resid)";
        $statement = $db->prepare($sql);
        $statement->bindValue(':term',$term);
        $statement->bindValue(':location',$location);
        $statement->bindParam(':data', $data);
+       $statement->bindValue(':resid', $resid);
        $isTrue = $statement->execute();
        if($isTrue){
        	insertLastSearch($id, $location);

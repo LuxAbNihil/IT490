@@ -17,6 +17,7 @@ function addToFavs($user_id, $restaurant_id){
 
 		return (object) "Already Favorited";
 	} catch(Exception $e){
+		publishToLog($e->getMessage());
 		echo "ERROR: ".$e->getMessage();
 	}
 }
@@ -33,6 +34,7 @@ function retrieveFavs($user_id, $restaurant_id){
 			return true;
 		return false;
 	} catch(Exception $e){
+		publishToLog($e->getMessage());
 		echo "ERROR: ".$e->getMessage();
 	}
 }
@@ -52,6 +54,7 @@ function insertFavs($id, $resid){
 	return false;
 } catch(Exception $e){
 		echo "ERROR: ".$e->getMessage();
+		publishToLog($e->getMessage());
 	}
 
 }
@@ -69,7 +72,50 @@ function removeFav($id, $resid){
 	return false;
 } catch(Exception $e){
 		echo "ERROR: ".$e->getMessage();
+		publishToLog($e->getMessage());
 	}
 
 }
+
+function favoritesList($id){
+		$db = Database::getDB();
+	try{
+	$sql = "SELECT restaurant_id FROM favorites WHERE id = :id";
+	$statement = $db -> prepare($sql);
+	$statement -> bindValue(':id', $id);
+	$isTrue = $statement -> execute();
+	$rows = $statement->fetchAll();
+	print_r($rows);
+	$favoritesArray = array();
+	if($isTrue){
+		foreach($rows as $row){
+			$result =findFavoritesFromSearch($row['restaurant_id']);
+			$decoded = json_decode($result);
+			array_push($favoritesArray, $decoded);
+		}
+
+		}
+	return $favoritesArray;
+} catch(Exception $e){
+		echo "ERROR: ".$e->getMessage();
+		publishToLog($e->getMessage());
+	}
+}
+
+function findFavoritesFromSearch($resid){
+		$db = Database::getDB();
+	try{
+	$sql = "SELECT data FROM search WHERE restaurant_id = :resid";
+	$statement = $db -> prepare($sql);
+	$statement -> bindValue(':resid', $resid);
+	$isTrue = $statement -> execute();
+	$row = $statement->fetch();
+	echo "FINDFAV\n\n";
+	print_r($row);
+	return $row['data'];
+} catch(Exception $e){
+		echo "ERROR: ".$e->getMessage();
+		publishToLog($e->getMessage());
+	}
+}	
 ?>

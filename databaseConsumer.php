@@ -20,18 +20,29 @@ function objectMapper($id, $term, $location, $obj){
     $makeArray = (array)$decodedObj;
     $sliced = array_slice($makeArray, 0, 2);
   $search_arr = array();
-   print_r($sliced);
+   // print_r($sliced);
   foreach($sliced as $item)
   {
     foreach($item as $i){
+      
+          echo "RESID";
+    echo "---------\n\n";
+    print_r($i);
+    echo $i->id;
       $stringified = json_encode($i);
       array_push($search_arr, $i);
-      insertSearch($id, $term, $location, $stringified);
+      insertSearch($id, $term, $location, $stringified, $i->id);
     }
     
   }
   $searchSlice = array_slice($search_arr, 0, 3);
   return json_encode($searchSlice);
+}
+
+function getResID($data){
+  foreach($data as $item){
+    print_r($item);
+  }
 }
 
 function requestProcessor($request)
@@ -80,6 +91,9 @@ function requestProcessor($request)
         if(!$checkFavs)
           return addToFavs($request['id'],$request['resid']);
         return removeFav($request['id'],$request['resid']);
+    case "favorite_list":
+        print_r($request);
+        return favoritesList($request['id']);
 
     case "favorites_check":
          return retrieveFavs($request['id'],$request['resid']);
