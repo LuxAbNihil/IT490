@@ -1,0 +1,144 @@
+.jumbotron {
+  background-color: #fff;
+  margin: 1rem;
+}
+#AuthForm {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.form-heading { color:#fff; font-size:23px;}
+.panel h2{ color:#444444; font-size:18px; margin:0 0 8px 0;}
+.panel p { color:#777777; font-size:14px; margin-bottom:30px; line-height:24px;}
+.form-control {
+  background: #f7f7f7 none repeat scroll 0 0;
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+  font-size: 14px;
+  height: 52px;
+  line-height: 50px;
+}
+.main-div {
+  background: #ffffff none repeat scroll 0 0;
+  border-radius: 2px;
+  margin: 10px auto 30px;
+  max-width: 38%;
+  padding: 50px 70px 70px 71px;
+  border: 1px solid #A3A3A3;
+}
+ .form-group {
+  margin-bottom:10px;
+}
+.login-form{ text-align:center;}
+.link a {
+  color: #777777;
+  font-size: 14px;
+  text-decoration: underline;
+}
+.btn.btn-primary {
+  background: #e0115f none repeat scroll 0 0;
+  border-color: #e0115f;
+  color: #ffffff;
+  font-size: 14px;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding: 0;
+}
+.link {
+  text-align: center; 
+  margin-bottom:10px;
+}
+.botto-text {
+  color: #ffffff;
+  font-size: 14px;
+  margin: auto;
+}
+
+.back { text-align: left; margin-top:10px;}
+.back a {color: #444444; font-size: 13px;text-decoration: none;}
+
+
+.header-container {
+  
+}
+
+  @media only screen and (max-width: 70em) {
+    .header-container{
+      margin: 0;}
+  }
+.header {
+  height: 6rem;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  border-bottom: #faf9f9;
+}
+.header-name {
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  margin-left: 2rem;
+  letter-spacing: 3px;
+}
+
+a {
+    font-weight: 600;
+    color: #000;
+  }
+
+.header-nav {
+  display: flex;
+  align-items: center;
+}
+
+.header-nav > * {
+    padding: 0 2rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: #000;
+  }
+
+  @media only screen and (max-width: 370px) {
+      .header-nav{
+        font-size: 2rem;
+      }
+    }
+
+  .payments {
+    text-transform: uppercase;
+    font-size: 1.2rem;
+/*    background-color:  #faf9f9;*/
+    color: #000;
+    position: relative;
+/*    border: 1px solid #e0115f;*/
+  }
+  .payments::before {
+       position: absolute;
+       top: 0;
+       left: 0;
+       width: 3px;
+       background-color:black;
+       transform: scale(0);
+       transition: transform 1s;
+
+   }
+
+  .payments:hover {
+    background-color: whitesmoke;
+    color: #e0115f;
+  }
+
+  .payments:focus {
+    outline: none;
+  }
+
+   a {
+    color: #000;
+  }

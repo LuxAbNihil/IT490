@@ -112,9 +112,9 @@ favoritesBtn.addEventListener("click", () => {
 		sendFavoriteRequest(userId, resId)
 	})
 
-logout.addEventListener("click", () => {
-	sessionStorage.removeItem("session");
-	location.reload();
-})
+// logout.addEventListener("click", () => {
+// 	sessionStorage.removeItem("session");
+// 	checkSession();
+// })
 
 })

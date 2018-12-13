@@ -30,6 +30,8 @@ window.addEventListener("load", () => {
 	}
 }
 
+checkSession();
+
 	const sessionObj = sessionStorage.getItem("session");
 		const parsedObj = JSON.parse(sessionObj);
 		const userId = parsedObj.id;
@@ -45,7 +47,7 @@ window.addEventListener("load", () => {
 		arr.map(item => {
 			return (
 				`
-				<div class="card" style="width: 18rem; margin: 5rem" onlick="showMore()">
+				<div class="card" style="width: 18rem; margin: 5rem; height: 29rem;" onlick="showMore()">
 					<div class="results-item-img">
 						<img src='${item.image_url}' class="card-img-top" style="width: 50; height: 80;" />
 					</div>
@@ -92,6 +94,11 @@ window.addEventListener("load", () => {
 
 
 sendFavoriteListRequest(userId);
+
+// logout.addEventListener("click", () => {
+// 	sessionStorage.removeItem("session");
+// 	checkSession();
+// })
 
 
 })

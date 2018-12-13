@@ -41,16 +41,16 @@ window.addEventListener("load", () => {
 	}
 }
 
-checkSession(); 
+
 
 	const listTemplateSugg = (el, arr) => {
 		el.innerHTML += 
 		arr.map(item => {
 			return (
 				`
-				<div class="card" style="width: 18rem; margin: 5rem" onlick="showMore()">
-					<div class="results-item-img">
-						<img src='${item.image_url}' class="card-img-top" style="width: 50; height: 80;" />
+				<div class="card" style="width: 18rem; margin: 5rem; height: 29rem;" onlick="showMore()">
+					<div class="results-item-img" style="height: 50%;">
+						<img src='${item.image_url}' class="card-img-top" style="width: 50; height: 80; height: 100%;" />
 					</div>
 					<div class="card-body">
 						<h5 style="display: flex; justify-content: center;">
@@ -72,7 +72,7 @@ checkSession();
 		arr.map(item => {
 			return (
 				`
-				<div class="card" style="width: 18rem; margin: 5rem" onlick="showMore()">
+				<div class="card" style="width: 18rem; margin: 5rem; height: 29rem;" onlick="showMore()">
 					<div class="results-item-img">
 						<img src='${item.image_url}' class="card-img-top" style="width: 50; height: 80;" />
 					</div>
@@ -186,6 +186,7 @@ searchForm.addEventListener("submit", (event) => {
 
 logout.addEventListener("click", () => {
 	sessionStorage.removeItem("session");
+	checkSession(); 
 })
 	// const inputVal = dashDropdown.onchange = (e) => {console.log(e.target.value)}
 })

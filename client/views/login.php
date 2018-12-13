@@ -8,26 +8,38 @@
        
 <!--      <script src="http://code.gijgo.com/1.6.1/js/gijgo.js" type="text/javascript"></script>
     <link href="http://code.gijgo.com/1.6.1/css/gijgo.css" rel="stylesheet" type="text/css" /> -->
+    <link rel="stylesheet" href="../styles/authStyles.css">
      <script type="text/javascript" src="../js/login.js" type="module"></script>
 </head>
-<div>
-     <div style="margin-top: 100px">LOGIN </div>
-        <form id="login" action="." method="post">
-            <div class="name"> Email</div>
-            <div class="form-group">
-                <input type="email" id="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="email" placeholder="Enter email">
-            </div>
-            <div class="name"> Password</div>
-             <div class="form-group">
-                <input type="password" id="pass" class="form-control" name="password" id="exampleInputPass" aria-describedby="pass" placeholder="Enter password">
-            </div>
-            <input type="hidden" name="action" value="login">
-            <div></div>
-            <input type="submit" value="Login" name="loggedIn" class="btn btn-primary">
-        </form>
-        <div id="textResponse">
-            
+
+<body id="AuthForm">
+<div class="container">
+<div class="login-form">
+<div class="main-div">
+    <div class="panel">
+       <h2>Login</h2>
+       <p>Please enter your email and password</p>
+           </div>
+            <form id="login" action="." method="post">
+
+                <div class="form-group">
+                     <input type="email" id="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="email" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="pass" class="form-control" name="password" id="exampleInputPass" aria-describedby="pass" placeholder="Enter password">
+                </div>
+                <div class="link">
+                <a href="signUp.php">Sign Up</a>
+                </div>
+                <input type="submit" value="Login" name="loggedIn" class="btn btn-primary">
+
+            </form>
         </div>
-         <a href="http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/signUp.php" class="badge badge-light" style="font-size: 1.2rem; background-color: #fff; margin: 2rem; ">Sign Up</a>
-    </div>
+</div>
+</div>
+</div>
+
+
+</body>
+
     </html>
