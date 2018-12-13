@@ -33,6 +33,7 @@ a {
   align-items: center;
 }
 
+
 .header-nav > * {
     padding: 0 2rem;
     height: 100%;
@@ -71,7 +72,7 @@ a {
    }
 
   .payments:hover {
-    background-color: #ff3366);
+    background-color: #ff3366;
     color: #fff;
   }
 
