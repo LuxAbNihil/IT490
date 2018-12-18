@@ -15,51 +15,58 @@ window.addEventListener("load", () => {
 	const userId = parsedObj.id;
 
 	window.showMore = (id) => {
-		console.log(id)
+		console.log(id);
 		window.location.assign(`http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/restaurant.php?resid=${id}`);
 	}	 
 
 
-	const checkSession = () => {
+// 	const checkSession = () => {
 
-	if(sessionStorage.getItem("session") != null){
+// 	if(sessionStorage.getItem("session") != null){
 
-		if(window.location.href != "http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/dashboard.php")
+// 		if(window.location.href != "http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/dashboard.php")
 			
-			window.location.assign("http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/dashboard.php");
-		else{
-			return null;
-		}
-	}
-	else {
-		if(window.location.href != "http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/login.php")
+// 			window.location.assign("http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/dashboard.php");
+// 		else{
+// 			return null;
+// 		}
+// 	}
+// 	else {
+// 		if(window.location.href != "http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/login.php")
 			
-			window.location.assign("http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/login.php");
-		else{
-			return null;
-		}
-	}
-}
+// 			window.location.assign("http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/login.php");
+// 		else{
+// 			return null;
+// 		}
+// 	}
+// }
 
 
 
 	const listTemplateSugg = (el, arr) => {
+
+		if(!arr)
+			return false;
+		console.log("ARR", arr);
 		el.innerHTML += 
 		arr.map(item => {
+			console.log("LIST", item)
 			return (
 				`
-				<div class="card" style="width: 18rem; margin: 5rem; height: 29rem;" onlick="showMore()">
+				<div class="card" style="width: 21rem; margin: 5rem; height: 25rem;" onlick="showMore()">
 					<div class="results-item-img" style="height: 50%;">
-						<img src='${item.image_url}' class="card-img-top" style="width: 50; height: 80; height: 100%;" />
+						<img src='${item.image_url}' class="card-img-top" style="width: 50; height: 80; height: 100%; object-fit: cover;" />
 					</div>
-					<div class="card-body">
+					<div class="card-body" style="display: flex; flex-direction: column; justify-content: center;align-items: center;">
 						<h5 style="display: flex; justify-content: center;">
         	 				${item.location.city}
-        	 			</h5> 
-						<h5 class="card-title">${item.name}</h5>
-						<div class="card-item">Rating: ${item.rating}</div>
-						<div class="card-item">Price: ${item.price}</div>
-						<button onclick="showMore('${item.id}')">Show More</button>
+        	 			</h5>  	 		
+							<h5 class="card-title" style="font-weight: bold;">${item.name}</h5>
+							<div class="card-item">Rating: ${item.rating}</div>
+							<div class="card-item">Price: ${item.price}</div>
+							<div class="button-wrap">					
+						<button class="btn btn-primary favorite" onclick="showMore('${item.id}')">Details</button>
+                		</div>
 					</div>
 				</div>
 				`
@@ -72,18 +79,20 @@ window.addEventListener("load", () => {
 		arr.map(item => {
 			return (
 				`
-				<div class="card" style="width: 18rem; margin: 5rem; height: 29rem;" onlick="showMore()">
-					<div class="results-item-img">
-						<img src='${item.image_url}' class="card-img-top" style="width: 50; height: 80;" />
+				<div class="card" style="width: 21rem; margin: 5rem; height: 25rem;" onlick="showMore()">
+					<div class="results-item-img" style="height: 50%;">
+						<img src='${item.image_url}' class="card-img-top" style="width: 50; height: 80; height: 100%; object-fit: cover;" />
 					</div>
-					<div class="card-body">
+					<div class="card-body" style="color:#000;display: flex; flex-direction: column; justify-content: center;align-items: center;">
 						<h5 style="display: flex; justify-content: center;">
         	 				${item.location.city}
-        	 			</h5> 
-						<h5 class="card-title">${item.name}</h5>
-						<div class="card-item">Rating: ${item.rating}</div>
-						<div class="card-item">Price: ${item.price}</div>
-						<button onclick="showMore('${item.id}')">Show More</button>
+        	 			</h5>
+							<h5 class="card-title" style="font-weight: bold;">${item.name}</h5>
+							<div class="card-item">Rating: ${item.rating}</div>
+							<div class="card-item">Price: ${item.price}</div>
+							<div class="button-wrap">
+						<button class="btn btn-primary favorite" onclick="showMore('${item.id}')">Details</button>
+                		</div>
 					</div>
 				</div>
 				`
@@ -98,6 +107,7 @@ window.addEventListener("load", () => {
 		
 		if(type=='initial'){
 			const initialSearchList = document.getElementById("initial-search-list");
+			console.log("ARRAY INITIAL", arr);
 			return listTemplateSugg(initialSearchList, arr);
 		}
 		else if(type=='search'){
@@ -114,7 +124,7 @@ window.addEventListener("load", () => {
 		let text = JSON.parse(response);
 		// let parsedText = JSON.parse(text);
 
-		console.log(text)
+		console.log("TEXT", text)
 		// console.log(parsedText);
 		searchResult.style.opacity = 0;
 		initialSearchResult.style.opacity = 1;

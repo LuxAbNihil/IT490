@@ -1,7 +1,39 @@
-.jumbotron {
-  background-color: #fff;
-  margin: 1rem;
+
+body {
+  background-image: linear-gradient(to right bottom, #ba265d, #eb2f64 );
+  color: #999;
+box-sizing: border-box;
+text-decoration: none;
+font-family: "Open Sans", sans-serif;
+font-weight: 400;
+line-height: 1.6;
+background-size: cover;
+background-repeat: no-repeat;
 }
+.jumbotron {
+  margin: 0 10% 4rem;
+  background-color: #f0eeee;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0;
+  box-shadow: 0 3rem 6rem rgba(0, 0, 0, 0.3);
+  overflow: auto;
+  height: 80vh;
+}
+
+  @media only screen and(max-width: 78em){    
+    .jumbotron {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+  }
+}
+
+
+
+
 #AuthForm {
   height: 100vh;
   display: flex;
@@ -70,12 +102,13 @@
       margin: 0;}
   }
 .header {
-  height: 6rem;
+  height: 5rem;
   display: flex;
   justify-content: space-between;
-  box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+  box-shadow: var(--header-shadow);
   background-color: #fff;
-  border-bottom: #faf9f9;
+  border-bottom: var(--grey-light2);
+  margin: 3rem 10% 0;
 }
 .header-name {
   display: flex;
@@ -83,10 +116,10 @@
   font-size: 1.6rem;
   margin-left: 2rem;
   letter-spacing: 3px;
+  color: #000;
 }
 
 a {
-    font-weight: 600;
     color: #000;
   }
 
@@ -139,6 +172,66 @@ a {
     outline: none;
   }
 
-   a {
+  .payments a {
     color: #000;
+    text-decoration: none;
+  }
+
+  .search-bar {
+    height: 3.5rem;
+    width: 23rem;
+    border: 1px solid #d3d3d3;
+    border-radius: 5rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: 0 2.6rem;
+    font-size: 1.2rem;
+  }
+
+  .search-bar-button {
+    color: #fff;
+    height: 3.5rem;
+    width: 10rem;
+    border: 1px solid #d3d3d3;
+    border-top-right-radius: 5rem;
+    border-bottom-right-radius: 5rem;
+    font-size: 1.2rem;
+    background-color: #e0115f;
+    border: 1px solid #e0115f;
+  }
+
+  .button-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn.btn-primary.favorite {
+    width: 9rem;
+    font-size: 1.2rem;
+    height: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.6rem;
+  }
+
+  .restaurant-desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 3rem 5rem 3rem 5rem;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #000;
+  }
+
+  .restaurant-desc-heading {
+    font-size: 2.4rem;
+    font-weight: bold;
+  }
+
+  .restaurant-desc-text {
+    margin: 2rem 0 0 0;
   }

@@ -9,26 +9,26 @@ window.addEventListener("load", () => {
 	const logout = document.getElementById("logout");
 
 
-	const checkSession = () => {
+// 	const checkSession = () => {
 
-	if(sessionStorage.getItem("session") != null){
+// 	if(sessionStorage.getItem("session") != null){
 
-		if(window.location.href != "http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/dashboard.php")
+// 		if(window.location.href != "http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/dashboard.php")
 			
-			window.location.assign("http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/dashboard.php");
-		else{
-			return null;
-		}
-	}
-	else {
-		if(window.location.href != "http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/login.php")
+// 			window.location.assign("http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/dashboard.php");
+// 		else{
+// 			return null;
+// 		}
+// 	}
+// 	else {
+// 		if(window.location.href != "http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/login.php")
 			
-			window.location.assign("http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/login.php");
-		else{
-			return null;
-		}
-	}
-}
+// 			window.location.assign("http://127.0.0.1/yelpProject/rabbitmqphp_example/client/views/login.php");
+// 		else{
+// 			return null;
+// 		}
+// 	}
+// }
 
 	const sessionObj = sessionStorage.getItem("session");
 		const parsedObj = JSON.parse(sessionObj);
@@ -53,13 +53,13 @@ window.addEventListener("load", () => {
 		} 
 		else if(text.scalar == "Fav Removed Successfully"){
 			favoritesBtn.innerHTML = "Favorite";
-				favoritesBtn.style.backgroundColor = "rgb(0, 123, 255)";
+				favoritesBtn.style.backgroundColor = "#e0115f";
 		}
 		else {	
 			let parsedText = JSON.parse(text);
 			if(parsedText) {
 				favoritesBtn.innerHTML = "Favorited";
-				favoritesBtn.style.backgroundColor = "green";
+				favoritesBtn.style.backgroundColor = "#6aaf6a";
 			}
 		}
 		// renderComment(parsedText);
@@ -112,9 +112,9 @@ favoritesBtn.addEventListener("click", () => {
 		sendFavoriteRequest(userId, resId)
 	})
 
-// logout.addEventListener("click", () => {
-// 	sessionStorage.removeItem("session");
-// 	checkSession();
-// })
+logout.addEventListener("click", () => {
+	sessionStorage.removeItem("session");
+	location.reload();
+})
 
 })

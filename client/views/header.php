@@ -17,7 +17,6 @@
      <script src="http://code.gijgo.com/1.6.1/js/gijgo.js" type="text/javascript"></script>
     <link href="http://code.gijgo.com/1.6.1/css/gijgo.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="../styles/authStyles.css">
-     <script type="text/javascript" src="../js/dashboard.js"></script>
 </head>
 <body>
  <div class="header-container">

@@ -1,19 +1,11 @@
-.header-container {
-  margin: 8rem 10% 0;
-
-}
-
-  @media only screen and (max-width: 70em) {
-    .header-container{
-      margin: 0;}
-  }
 .header {
-  height: 7rem;
+  height: 5rem;
   display: flex;
   justify-content: space-between;
-  box-shadow: 0 2rem 6rem rgba(0, 0, 0, 0.3);
+  box-shadow: var(--header-shadow);
   background-color: #fff;
-  border-bottom: #faf9f9;
+  border-bottom: var(--grey-light2);
+  margin: 8rem 10% 0;
 }
 .header-name {
   display: flex;
